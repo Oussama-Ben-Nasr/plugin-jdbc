@@ -2,6 +2,7 @@ package io.kestra.plugin.jdbc.duckdb;
 
 import io.kestra.plugin.jdbc.AbstractCellConverter;
 import lombok.SneakyThrows;
+import org.duckdb.DuckDBArray;
 import org.duckdb.DuckDBResultSet;
 
 import java.sql.Connection;
@@ -46,6 +47,10 @@ public class DuckDbCellConverter extends AbstractCellConverter {
             return col.intValue();
         }
 
+        if (data instanceof DuckDBArray) {
+            return ((DuckDBArray) data).getArray();
+        }
+        System.out.println("This is a debug message" );
         return super.convert(columnIndex, rs);
     }
 }
